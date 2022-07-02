@@ -6,3 +6,20 @@
   height: 50px;
   font-size: 20px;
 }
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 80vh;
+  border: 1px red solid;
+}
+
+.welcome-message {
+  font-size: 45px;
+}
+
+.opening-times {
+  font-size: 30px;
+}
