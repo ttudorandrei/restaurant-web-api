@@ -60,6 +60,19 @@ const menu = [
   },
 ];
 
+// trying to retrieve the favourite menu items from ls
+const favouriteMenuItem = localStorage.getItem("faouriteMenuItems");
+
+// if there's no favourite menu items in the local storage, create empty array and add it to LS
+if (!favouriteMenuItem) {
+  let favouriteMenuItemsArray = [];
+
+  localStorage.setItem(
+    "faouriteMenuItems",
+    JSON.stringify(favouriteMenuItemsArray)
+  );
+}
+
 // second bit - logic
 const renderHome = function () {
   container.innerText = "";
@@ -75,8 +88,8 @@ const renderHome = function () {
 
 window.onload = renderHome();
 
-const addItemToFavourites = function (params) {
-  console.log("favourite");
+const addItemToFavourites = function (menuItem) {
+  console.log(menuItem);
 };
 
 const renderMenu = function () {
@@ -99,7 +112,9 @@ const renderMenu = function () {
     menuItemMeasurement.innerHTML = menu[index].measurement;
     addToFavourites.innerHTML = "Add to favourites";
 
-    addToFavourites.addEventListener("click", addItemToFavourites);
+    addToFavourites.addEventListener("click", function () {
+      addItemToFavourites(menu[index]);
+    });
 
     container.appendChild(menuCard);
     menuCard.appendChild(menuItemHeader);
