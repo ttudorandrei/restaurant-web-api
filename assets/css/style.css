@@ -13,7 +13,6 @@
   align-items: center;
   flex-direction: column;
   height: 80vh;
-  border: 1px red solid;
 }
 
 .welcome-message {
@@ -22,4 +21,15 @@
 
 .opening-times {
   font-size: 30px;
+}
+
+.card {
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: start;
+  padding: 20px;
+  width: 200px;
+  height: 350px;
 }
