@@ -1,4 +1,4 @@
-// first bit - create/target buttons
+// create/target buttons
 const homeButton = document.getElementById("homeButton");
 const menuButton = document.getElementById("menuButton");
 const container = document.getElementById("container");
@@ -60,20 +60,21 @@ const menu = [
   },
 ];
 
-// trying to retrieve the favourite menu items from ls
-const favouriteMenuItem = localStorage.getItem("faouriteMenuItems");
+// logic
+// trying to retrieve the favorite menu items from ls
+const favoriteMenuItem = localStorage.getItem("faouriteMenuItems");
 
-// if there's no favourite menu items in the local storage, create empty array and add it to LS
-if (!favouriteMenuItem) {
-  let favouriteMenuItemsArray = [];
+// if there's no favorite menu items in the local storage, create empty array and add it to LS
+if (!favoriteMenuItem) {
+  let favoriteMenuItemsArray = [];
 
+  // saving the empty array in local storage
   localStorage.setItem(
-    "faouriteMenuItems",
-    JSON.stringify(favouriteMenuItemsArray)
+    "favoriteMenuItems",
+    JSON.stringify(favoriteMenuItemsArray)
   );
 }
 
-// second bit - logic
 const renderHome = function () {
   container.innerText = "";
   // create html tag
@@ -83,39 +84,51 @@ const renderHome = function () {
   // add class for created html tag/element
   welcomeHeader.classList.add("welcome-message");
 
+  // appending the newly created element to the container
   container.appendChild(welcomeHeader);
 };
 
-window.onload = renderHome();
-
-const addItemToFavourites = function (menuItem) {
+const addItemToFavorites = function (menuItem) {
   console.log(menuItem);
+  let favoriteMenuArray = JSON.parse(localStorage.getItem("favoriteMenuItems"));
+
+  favoriteMenuArray.push(menuItem);
+  localStorage.setItem("favoriteMenuItems", JSON.stringify(favoriteMenuArray));
 };
 
 const renderMenu = function () {
   // empty container contents
   container.innerText = "";
 
+  // for each menu item in the menu array, create and append a card
   for (let index = 0; index < menu.length; index++) {
+    // creating a div element  and adding the "card" class to it
     const menuCard = document.createElement("div");
     menuCard.classList.add("card");
 
+    // creating the components of the card (one h4 and 4 divs)
     const menuItemHeader = document.createElement("h4");
     const menuItemDescription = document.createElement("div");
     const menuItemIngredient = document.createElement("div");
     const menuItemMeasurement = document.createElement("div");
     const addToFavourites = document.createElement("button");
 
+    // assigning the contents for each one of those divs
     menuItemHeader.innerHTML = menu[index].dish;
     menuItemDescription.innerHTML = menu[index].description;
     menuItemIngredient.innerHTML = menu[index].ingredient;
     menuItemMeasurement.innerHTML = menu[index].measurement;
     addToFavourites.innerHTML = "Add to favourites";
 
+    // adding an event listener to the button
     addToFavourites.addEventListener("click", function () {
       addItemToFavourites(menu[index]);
     });
 
+    // appending the dynamically created elements
+    // order is important!
+    // first we append the div with the class of "card" which is the container
+    // then, to that div we append all of the other elements
     container.appendChild(menuCard);
     menuCard.appendChild(menuItemHeader);
     menuCard.appendChild(menuItemDescription);
@@ -125,6 +138,8 @@ const renderMenu = function () {
   }
 };
 
-// third bit - add event listeners
+// this will run the "renderHome" function when the page is loaded
+window.onload = renderHome();
+// add event listeners
 homeButton.addEventListener("click", renderHome);
 menuButton.addEventListener("click", renderMenu);
