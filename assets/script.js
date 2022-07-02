@@ -62,6 +62,7 @@ const menu = [
 
 // second bit - logic
 const renderHome = function () {
+  container.innerText = "";
   // create html tag
   const welcomeHeader = document.createElement("h3");
   // set the inner text of the html tag
@@ -70,16 +71,45 @@ const renderHome = function () {
   welcomeHeader.classList.add("welcome-message");
 
   container.appendChild(welcomeHeader);
-  // container.appendChild(openingTimes);
 };
 
-// window.onload = renderHome();
+window.onload = renderHome();
 
-const showMenu = function () {
+const addItemToFavourites = function (params) {
+  console.log("favourite");
+};
+
+const renderMenu = function () {
   // empty container contents
   container.innerText = "";
+
+  for (let index = 0; index < menu.length; index++) {
+    const menuCard = document.createElement("div");
+    menuCard.classList.add("card");
+
+    const menuItemHeader = document.createElement("h4");
+    const menuItemDescription = document.createElement("div");
+    const menuItemIngredient = document.createElement("div");
+    const menuItemMeasurement = document.createElement("div");
+    const addToFavourites = document.createElement("button");
+
+    menuItemHeader.innerHTML = menu[index].dish;
+    menuItemDescription.innerHTML = menu[index].description;
+    menuItemIngredient.innerHTML = menu[index].ingredient;
+    menuItemMeasurement.innerHTML = menu[index].measurement;
+    addToFavourites.innerHTML = "Add to favourites";
+
+    addToFavourites.addEventListener("click", addItemToFavourites);
+
+    container.appendChild(menuCard);
+    menuCard.appendChild(menuItemHeader);
+    menuCard.appendChild(menuItemDescription);
+    menuCard.appendChild(menuItemIngredient);
+    menuCard.appendChild(menuItemMeasurement);
+    menuCard.appendChild(addToFavourites);
+  }
 };
 
 // third bit - add event listeners
 homeButton.addEventListener("click", renderHome);
-menuButton.addEventListener("click", showMenu);
+menuButton.addEventListener("click", renderMenu);
